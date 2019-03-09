@@ -1,6 +1,7 @@
 from flask import Blueprint, request, render_template
 import social.db.user as db_user
 import social.db.follow as db_follow
+import social.db.post as db_post
 import json
 from social.webserver.login import User
 from flask_login import login_required, login_user, current_user, logout_user
@@ -52,6 +53,15 @@ def follow():
         else:
             return "User Not found"
     return render_template('follow.html')
+
+
+@bp.route('/post', methods=['GET', 'POST'])
+def post():
+    post = request.form.get('post')
+    if request.method == 'POST' and post:
+        post_msg = db_post.create_post(current_user.id, post)
+        return json.dumps(post_msg, indent=4)
+    return render_template("post.html")
 
 
 def split(username):

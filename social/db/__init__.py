@@ -1,7 +1,7 @@
 import os
 import sqlite3
 
-DATABASE_PATH = os.path.join('..', os.path.dirname(os.path.realpath(__file__)), 'socialize.db')
+DATABASE_PATH = os.path.join('..', os.path.dirname(os.path.realpath(__file__)), 'socialize.sqlite3')
 
 
 def create_tables():
@@ -9,9 +9,9 @@ def create_tables():
         cursor = connection.cursor()
         cursor.execute("""
             CREATE TABLE "user" (
-                id         INTEGER PRIMARY KEY AUTOINCREMENT,
-                name       TEXT NOT NULL,
-                passcode   TEXT NOT NULL
+                id      INTEGER PRIMARY KEY AUTOINCREMENT,
+                name    TEXT NOT NULL,
+                passwd  TEXT NOT NULL
             );
         """)
 

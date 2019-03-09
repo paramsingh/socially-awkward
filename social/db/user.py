@@ -2,9 +2,12 @@ import sqlite3
 from social.db import DATABASE_PATH
 from flask_bcrypt import generate_password_hash
 
+def _get_hash(text):
+    return text
 
 def create_user(username, password):
-    pwd_hash = generate_password_hash(password)
+    pwd_hash = _get_hash(password)
+    print("create: ", pwd_hash)
     with sqlite3.connect(DATABASE_PATH) as connection:
         cursor = connection.cursor()
         cursor.execute("""
@@ -31,3 +34,19 @@ def get_user(user_id):
             'name': row[1],
             'passwd': row[2].decode('utf-8'),
         }
+
+
+def get_by_username_and_password(user_name, password):
+    pwd_hash = _get_hash(password)
+    print("lgin: ", pwd_hash)
+    with sqlite3.connect(DATABASE_PATH) as connection:
+        cursor = connection.cursor()
+        cursor.execute("""
+            SELECT id, name, passwd
+              FROM "user"
+             WHERE name = ? AND passwd = ?;
+        """, (user_name, pwd_hash))
+        row = cursor.fetchone()
+        if row is None:
+            return None
+        return row[0]

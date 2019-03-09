@@ -9,8 +9,9 @@ def create_tables():
         cursor = connection.cursor()
         cursor.execute("""
             CREATE TABLE "user" (
-                id      INTEGER PRIMARY KEY AUTOINCREMENT,
-                name    TEXT NOT NULL
+                id         INTEGER PRIMARY KEY AUTOINCREMENT,
+                name       TEXT NOT NULL,
+                passcode   TEXT NOT NULL
             );
         """)
 

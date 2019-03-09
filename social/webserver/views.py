@@ -74,3 +74,14 @@ def user_exists(username):
     username, servername = split(username)
     r = requests.get("http://" + servername+"/api/exist", params={'username': username})
     return r.status_code == 200
+
+
+def get_posts():
+    if _get_post():
+        # fetch the posts and show
+
+
+def _get_post(username):
+    username, servername = split(username)
+    r = requests.get("http://" + servername + "/api/posts", params={'username': username})
+    return r.status_code == 200

@@ -17,5 +17,9 @@ def user_exists():
 	else:
 		return "Found"
 
-
-
+# able to get the posts of users from this server
+@api.route('/posts')
+def get_posts():
+	# TODO: fetch the posts of the particular username or id provided
+	# call a func in db to get the posts of a particular user_id and display the
+	# posts accordingly and boom :p

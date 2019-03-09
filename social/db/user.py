@@ -44,9 +44,25 @@ def get_by_username_and_password(user_name, password):
         cursor.execute("""
             SELECT id, name, passwd
               FROM "user"
-             WHERE name = ? AND passwd = ?;
+             WHERE name = ? AND passwd = ?
         """, (user_name, pwd_hash))
         row = cursor.fetchone()
+        if row is None:
+            return None
+        return row[0]
+
+
+def get_by_username(user_name):
+    user_name = user_name.strip()
+    with sqlite3.connect(DATABASE_PATH) as connection:
+        cursor = connection.cursor()
+        cursor.execute("""
+            SELECT id, name, passwd
+              FROM "user"
+             WHERE name = ?
+        """, (user_name,))
+        row = cursor.fetchone()
+        print row
         if row is None:
             return None
         return row[0]

@@ -14,22 +14,5 @@ def init_login(app):
 	def load_user(user_id):
 	    return User(user_id)
 
-
-
-
-
-
-
-# @app.route('/login/')
-# def login():
-    
-#     return "you are logged in!"
-
-# @app.route('/logout/')
-# @login_required
-# def logout():
-#     logout_user()
-#     return "you are logged out!"
-
 if __name__ == '__main__':
     app.run(host="0.0.0.0",port=1212,debug=True)

@@ -7,7 +7,9 @@ def create_app():
     init_login(app)
     app.config['SECRET_KEY'] = 'this is so secret'
     from social.webserver.views import bp
+    from social.webserver.api import api
     app.register_blueprint(bp)
+    app.register_blueprint(api, url_prefix='/api')
 
     return app
 

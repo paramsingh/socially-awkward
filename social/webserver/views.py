@@ -1,8 +1,10 @@
 from flask import Blueprint, request, render_template
 import social.db.user as db_user
+import social.db.follow as db_follow
 import json
 from social.webserver.login import User
 from flask_login import login_required, login_user, current_user, logout_user
+import requests
 
 bp = Blueprint('bp', __name__)
 
@@ -38,3 +40,27 @@ def log_out():
 @login_required
 def only_logged_in():
     return current_user.id
+
+@bp.route('/follow', methods=['GET', 'POST'])
+@login_required
+def follow():
+    username = request.form.get('username')
+    if request.method == 'POST' and username:
+        if user_exists(username):
+            db_follow.add(current_user.id, username)
+            return "Started following"
+        else:
+            return "User Not found"
+    return render_template('follow.html')
+
+
+def split(username):
+    name, server = username.split('@')
+    print name
+    return name, server
+
+
+def user_exists(username):
+    username, servername = split(username)
+    r = requests.get("http://" + servername+"/api/exist", params={'username': username})
+    return r.status_code == 200

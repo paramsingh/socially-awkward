@@ -24,3 +24,11 @@ def create_tables():
             );
         """)
 
+        cursor.execute("""
+            CREATE TABLE follow (
+                follower  INTEGER,
+                following TEXT NOT NULL,
+                FOREIGN KEY (follower) REFERENCES "user"(id)
+            );
+        """)
+

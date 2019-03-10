@@ -25,5 +25,4 @@ def get_posts():
         return jsonify({"message": "Not Found"}), 404
 
     posts = db_post.get_posts(user_id)
-    print(posts)
     return jsonify(posts)

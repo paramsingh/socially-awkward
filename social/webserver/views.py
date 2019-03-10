@@ -80,7 +80,7 @@ def post():
 def profile(user_name):
     try:
         posts = _get_posts(user_name)
-        return jsonify(posts)
+        return render_template('profile.html', posts=posts)
     except NotFound:
         return "user not found", 404
 

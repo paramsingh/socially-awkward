@@ -11,6 +11,11 @@ from werkzeug.exceptions import NotFound
 
 bp = Blueprint('bp', __name__)
 
+@bp.route('/', methods=['GET'])
+def index():
+    return render_template('index.html')
+
+
 @bp.route('/signup', methods=['GET', 'POST'])
 def sign_up():
     username = request.form.get('username')

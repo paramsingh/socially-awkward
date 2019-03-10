@@ -1,11 +1,21 @@
 <html>
     <head>
-        <title>
-            {% block title %} {% endblock %}
-        </title>
+        <title> {% block title %} {% endblock %}</title>
+        <script src={{url_for('static', filename='css/jquery-3.1.1.min.js')}} type="text/javascript"></script>
+        <script src = {{url_for('static', filename='css/semantic.js')}} type = "text/javascript"> </script>
+        <link rel="stylesheet" href={{url_for('static', filename='css/semantic.css')}}>
     </head>
-
     <body>
-        {% block content %} {% endblock %}
+        <div class = "ui secondary pointing menu">
+            <a class = "item" href="/">Home</a>
+            <a class = "item" href="/login"> Login </a>
+            <a class = "item" href="/signup"> Signup </a>
+            <a class = "item" href="/logout"> Logout </a>
+      <a class = "item" href="/follow"> follow </a>
+        </div>
+
+        <h1 class = "ui center aligned header"> Socialize </h1>
+        {% block content %}
+        {% endblock %}
     </body>
 </html>

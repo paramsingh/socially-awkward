@@ -3,9 +3,19 @@
 {% block title %}Sign up - Socialize{% endblock %}
 
 {% block content %}
-    <form method="POST">
-        <input type="text" placeholder="username" name="username">
-        <input type="password" placeholder="password" name="password">
-        <input type="submit" value="Submit">
-    </form>
+<div class = "ui centered two column grid">
+    <div class = "five wide column" style="position: relative; top:150px">
+
+	    <form class = "ui form" method = 'post'>
+	        <h3 class = "ui dividing header"> Signup </h3>
+	        <div class = "field">
+	            <input type = "text" name = "username" placeholder = "Username"> </input>
+	            <input type = "password" name = "password" placeholder = "Password"> </input>
+	        </div>
+	         <div class = "field">
+	            <input type = "submit" class = "ui primary button" value = "Signup">
+	        </div>
+	    </form>
+    </div>
+</div>
 {% endblock %}

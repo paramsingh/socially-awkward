@@ -3,8 +3,18 @@
 {% block title %}Post - Socialize{% endblock %}
 
 {% block content %}
-    <form method="POST">
-        <input type="text" placeholder="Hey! What's on your mind?" name="post">
-        <input type="submit" value="Post it!">
-    </form>
+<div class = "ui centered two column grid">
+    <div class = "five wide column" style="position: relative; top:150px">
+
+	    <form class = "ui form" method = 'post'>
+	        <h3 class = "ui dividing header"> Write a post! </h3>
+	        <div class = "field">
+	            <input type = "text" name = "post" placeholder = "Hey! What's on your mind?"> </input>
+	        </div>
+	         <div class = "field">
+	            <input type = "submit" class = "ui primary button" value = "Publish!">
+	        </div>
+	    </form>
+    </div>
+</div>
 {% endblock %}

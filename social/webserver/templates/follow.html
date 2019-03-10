@@ -3,8 +3,18 @@
 {% block title %}Follow - Socialize{% endblock %}
 
 {% block content %}
-    <form method="POST">
-        <input type="text" placeholder="username" name="username">
-        <input type="submit" value="Follow">
-    </form>
+<div class = "ui centered two column grid">
+    <div class = "five wide column" style="position: relative; top:150px">
+
+	    <form class = "ui form" method = 'post'>
+	        <h3 class = "ui dividing header"> Follow </h3>
+	        <div class = "field">
+	            <input type = "text" name = "username" placeholder = "Username"> </input>
+	        </div>
+	         <div class = "field">
+	            <input type = "submit" class = "ui primary button" value = "Follow">
+	        </div>
+	    </form>
+    </div>
+</div>
 {% endblock %}

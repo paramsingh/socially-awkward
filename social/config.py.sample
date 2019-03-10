@@ -1,0 +1,4 @@
+DEBUG = True
+SECRET_KEY = 'secret'
+CURRENT_SERVER = 'localhost:5000'
+

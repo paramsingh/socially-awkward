@@ -8,7 +8,7 @@ def create_tables():
     with sqlite3.connect(DATABASE_PATH) as connection:
         cursor = connection.cursor()
         cursor.execute("""
-            CREATE TABLE "user" (
+            CREATE TABLE IF NOT EXISTS "user" (
                 id      INTEGER PRIMARY KEY AUTOINCREMENT,
                 name    TEXT NOT NULL UNIQUE,
                 passwd  TEXT NOT NULL
@@ -16,7 +16,7 @@ def create_tables():
         """)
 
         cursor.execute("""
-            CREATE TABLE post (
+            CREATE TABLE IF NOT EXISTS post (
                 id      INTEGER PRIMARY KEY AUTOINCREMENT,
                 user_id INTEGER,
                 message TEXT NOT NULL,
@@ -25,7 +25,7 @@ def create_tables():
         """)
 
         cursor.execute("""
-            CREATE TABLE follow (
+            CREATE TABLE IF NOT EXISTS follow (
                 follower  INTEGER,
                 following TEXT NOT NULL,
                 FOREIGN KEY (follower) REFERENCES "user"(id)

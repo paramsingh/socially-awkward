@@ -32,7 +32,7 @@ def get_user(user_id):
         return {
             'id': row[0],
             'name': row[1],
-            'passwd': row[2].decode('utf-8'),
+            'passwd': row[2],
         }
 
 

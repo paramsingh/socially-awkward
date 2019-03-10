@@ -2,3 +2,4 @@ Flask
 requests
 flask-login
 flask-bcrypt
+gunicorn

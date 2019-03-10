@@ -27,5 +27,5 @@ def get_posts(user_id):
         rows = cursor.fetchall()
         return [{
             'user_id': row[0],
-            'post': row[1].decode('utf-8'),
+            'post': row[1],
         } for row in rows]

@@ -13,7 +13,11 @@ bp = Blueprint('bp', __name__)
 
 @bp.route('/', methods=['GET'])
 def index():
-    return render_template('index.html')
+    posts = None
+    if current_user is not None and current_user.is_authenticated:
+        print("Inside")
+        posts = feed(current_user.id)
+    return render_template('index.html', posts=posts)
 
 
 @bp.route('/signup', methods=['GET', 'POST'])
@@ -63,7 +67,7 @@ def follow():
             db_follow.add(current_user.id, username)
             return redirect("/")
         else:
-            return "User Not found"
+            return "User Not found!"
     return render_template('follow.html')
 
 
@@ -110,6 +114,20 @@ def _get_posts(username):
         raise ExternalServerError
     else:
         return r.json()
+
+
+def feed(user_id):
+    following = db_follow.get_feed(user_id)
+    all_posts = []
+    for names in following:
+        try:
+            all_posts.extend(_get_posts(names))
+        except NotFound:
+            pass
+    all_posts = sorted(all_posts, key=lambda k: k['created'])
+    print(all_posts)
+    return all_posts[::-1]
+
 
 class ExternalServerError(Exception):
     pass

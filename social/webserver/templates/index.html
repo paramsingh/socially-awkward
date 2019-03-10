@@ -3,4 +3,23 @@
 {% block title %}Socialize{% endblock %}
 
 {% block content %}
+<div class="ui feed" style="position: relative; left: 40%; top:10%;">
+	{% if posts %}
+	  {% for post in posts %}
+	      <div class="event">
+	        <div class="content">
+	          <div class="summary" style="font-size: 15px">
+	              <a>{{post.author}}</a>
+	            <div class="date">
+	              {{post.created}}
+	            </div>
+	          </div>
+	          <div class="extra text" style="font-size: 20px">
+	            {{post.text}}
+	          </div>
+	        </div>
+	      </div>
+	    {% endfor %}
+	{% endif %}
+</div>
 {% endblock %}

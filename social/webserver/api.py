@@ -11,11 +11,12 @@ api = Blueprint('api', __name__)
 @api.route('/exist')
 def user_exists():
     username = request.args.get("username")
-    result = db_user.get_by_username(username)
+    result, val = db_user.get_by_username(username)
     if result is None:
         return "Not Found", 404
     else:
         return "Found"
+
 
 @api.route('/posts')
 def get_posts():
@@ -26,3 +27,4 @@ def get_posts():
 
     posts = db_post.get_posts(user_id)
     return jsonify(posts)
+

@@ -20,6 +20,7 @@ def create_tables():
                 id      INTEGER PRIMARY KEY AUTOINCREMENT,
                 user_id INTEGER,
                 message TEXT NOT NULL,
+                created DATETIME DEFAULT CURRENT_TIMESTAMP,
                 FOREIGN KEY (user_id) REFERENCES "user"(id)
             );
         """)

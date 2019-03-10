@@ -20,12 +20,13 @@ def get_posts(user_id):
     with sqlite3.connect(DATABASE_PATH) as connection:
         cursor = connection.cursor()
         cursor.execute("""
-            SELECT user_id, message
+            SELECT user_id, message, created
               FROM "post"
-             WHERE id = ?;
+             WHERE user_id = ?
         """, (user_id, ))
         rows = cursor.fetchall()
         return [{
             'user_id': row[0],
             'post': row[1],
+            'created': row[2],
         } for row in rows]

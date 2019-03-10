@@ -20,10 +20,10 @@ def user_exists():
 @api.route('/posts')
 def get_posts():
     username = request.args.get("username")
-    user = db_user.get_by_username(username)
-    if user is None:
+    user_id, user_name = db_user.get_by_username(username)
+    if user_id is None:
         return jsonify({"message": "Not Found"}), 404
 
-    posts = db_post.get_posts(user)
+    posts = db_post.get_posts(user_id)
     print(posts)
     return jsonify(posts)

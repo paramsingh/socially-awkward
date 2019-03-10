@@ -1,5 +1,5 @@
 from __future__ import print_function
-from flask import Blueprint, request, render_template, jsonify, current_app
+from flask import Blueprint, request, render_template, jsonify, current_app, redirect, url_for
 import social.db.user as db_user
 import social.db.follow as db_follow
 import social.db.post as db_post
@@ -35,18 +35,18 @@ def log_in():
     username = request.form.get('username')
     password = request.form.get('password')
     if request.method == 'POST' and username and password:
-        user_id = db_user.get_by_username_and_password(username, password)
+        user_id, name = db_user.get_by_username_and_password(username, password)
         if user_id is None:
             return "Incorrect Username or Password!"
-        login_user(User(user_id))
-        return "You've been logged in!"
+        login_user(User(user_id, name))
+        return redirect("/")
     return render_template("login.html")
 
 @bp.route('/logout', methods=['GET', 'POST'])
 @login_required
 def log_out():
     logout_user()
-    return "Logged out"
+    return redirect("/")
 
 @bp.route('/only')
 @login_required
@@ -60,7 +60,7 @@ def follow():
     if request.method == 'POST' and username:
         if user_exists(username):
             db_follow.add(current_user.id, username)
-            return "Started following"
+            return redirect("/")
         else:
             return "User Not found"
     return render_template('follow.html')
@@ -72,7 +72,7 @@ def post():
     post = request.form.get('post')
     if request.method == 'POST' and post:
         post_msg = db_post.create_post(current_user.id, post)
-        return json.dumps(post_msg, indent=4)
+        return redirect(url_for('bp.profile', user_name=current_user.name))
     return render_template("post.html")
 
 @bp.route('/user/<user_name>', methods=['GET'])
@@ -82,8 +82,6 @@ def profile(user_name):
         return jsonify(posts)
     except NotFound:
         return "user not found", 404
-    except Exception:
-        return "There was an error", 500
 
 
 def split(username):

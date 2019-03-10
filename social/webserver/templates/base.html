@@ -7,11 +7,19 @@
     </head>
     <body>
         <div class = "ui secondary pointing menu">
+            {% if current_user.is_authenticated %}
+                <span class="item">{{ current_user.name }}</span>
+            {% endif %}
             <a class = "item" href="/">Home</a>
-            <a class = "item" href="/login"> Login </a>
-            <a class = "item" href="/signup"> Signup </a>
-            <a class = "item" href="/logout"> Logout </a>
-      <a class = "item" href="/follow"> follow </a>
+            {% if not current_user.is_authenticated %}
+                <a class = "item" href="/login"> Login </a>
+                <a class = "item" href="/signup"> Signup </a>
+            {% else %}
+                <a class = "item" href="/follow"> follow </a>
+                <a class = "item" href="/post"> Post </a>
+                <a class = "item" href="/logout"> Logout </a>
+
+            {% endif %}
         </div>
 
         <h1 class = "ui center aligned header"> Socialize </h1>

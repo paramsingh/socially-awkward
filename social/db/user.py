@@ -45,8 +45,8 @@ def get_by_username_and_password(user_name, password):
         """, (user_name, pwd_hash))
         row = cursor.fetchone()
         if row is None:
-            return None
-        return row[0]
+            return None, None
+        return row[0], row[1]
 
 
 def get_by_username(user_name):
@@ -60,5 +60,5 @@ def get_by_username(user_name):
         """, (user_name,))
         row = cursor.fetchone()
         if row is None:
-            return None
-        return row[0]
+            return None, None
+        return row[0], row[1]

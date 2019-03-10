@@ -28,6 +28,8 @@ def get_user(user_id):
              WHERE id = ?;
         """, (user_id, ))
         row = cursor.fetchone()
+        if row is None:
+            return None
         return {
             'id': row[0],
             'name': row[1],

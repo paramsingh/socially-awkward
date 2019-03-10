@@ -16,6 +16,8 @@ def init_login(app):
 	@login_manager.user_loader
 	def load_user(user_id):
             user = db_user.get_user(user_id)
+            if not user:
+                return None
             return User(user['id'], user['name'])
 
 if __name__ == '__main__':

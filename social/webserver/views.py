@@ -26,7 +26,8 @@ def sign_up():
         except Exception as e:
             print(str(e))
             return "There was an error while creating the user", 500
-        return json.dumps(user, indent=4)
+        #return json.dumps(user, indent=4)
+        return redirect("/")
     return render_template("signup.html")
 
 # TODO: login forbidden

@@ -20,7 +20,6 @@ def create_user(username, password):
 
 
 def get_user(user_id):
-    print(type(user_id), user_id)
     with sqlite3.connect(DATABASE_PATH) as connection:
         cursor = connection.cursor()
         cursor.execute("""
@@ -32,13 +31,11 @@ def get_user(user_id):
         return {
             'id': row[0],
             'name': row[1],
-            'passwd': row[2],
         }
 
 
 def get_by_username_and_password(user_name, password):
     pwd_hash = _get_hash(password)
-    print("lgin: ", pwd_hash)
     with sqlite3.connect(DATABASE_PATH) as connection:
         cursor = connection.cursor()
         cursor.execute("""

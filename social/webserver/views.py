@@ -1,4 +1,5 @@
-from flask import Blueprint, request, render_template
+from __future__ import print_function
+from flask import Blueprint, request, render_template, jsonify, current_app
 import social.db.user as db_user
 import social.db.follow as db_follow
 import social.db.post as db_post
@@ -6,6 +7,7 @@ import json
 from social.webserver.login import User
 from flask_login import login_required, login_user, current_user, logout_user
 import requests
+from werkzeug.exceptions import NotFound
 
 bp = Blueprint('bp', __name__)
 
@@ -14,7 +16,11 @@ def sign_up():
     username = request.form.get('username')
     password = request.form.get('password')
     if request.method == 'POST' and username and password:
-        user = db_user.create_user(username, password)
+        try:
+            user = db_user.create_user(username, password)
+        except Exception as e:
+            print(str(e))
+            return "There was an error while creating the user", 500
         return json.dumps(user, indent=4)
     return render_template("signup.html")
 
@@ -56,6 +62,7 @@ def follow():
 
 
 @bp.route('/post', methods=['GET', 'POST'])
+@login_required
 def post():
     post = request.form.get('post')
     if request.method == 'POST' and post:
@@ -63,10 +70,24 @@ def post():
         return json.dumps(post_msg, indent=4)
     return render_template("post.html")
 
+@bp.route('/user/<user_name>', methods=['GET'])
+def profile(user_name):
+    try:
+        posts = _get_posts(user_name)
+        return jsonify(posts)
+    except NotFound:
+        return "user not found", 404
+    except Exception:
+        return "There was an error", 500
+
 
 def split(username):
-    name, server = username.split('@')
-    print name
+    split = username.split('@')
+    if len(split) == 2:
+        name, server = split
+    elif len(split) == 1:
+        name = split[0]
+        server = current_app.config['CURRENT_SERVER']
     return name, server
 
 
@@ -76,12 +97,15 @@ def user_exists(username):
     return r.status_code == 200
 
 
-def get_posts():
-    if _get_post():
-        # fetch the posts and show
-
-
-def _get_post(username):
+def _get_posts(username):
     username, servername = split(username)
     r = requests.get("http://" + servername + "/api/posts", params={'username': username})
-    return r.status_code == 200
+    if r.status_code == 404:
+        raise NotFound
+    elif r.status_code != 200:
+        raise ExternalServerError
+    else:
+        return r.json()
+
+class ExternalServerError(Exception):
+    pass

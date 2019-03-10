@@ -2,4 +2,3 @@ Flask
 requests
 flask-login
 flask-bcrypt
-sqlite3

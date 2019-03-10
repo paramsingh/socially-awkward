@@ -10,7 +10,7 @@ def create_tables():
         cursor.execute("""
             CREATE TABLE "user" (
                 id      INTEGER PRIMARY KEY AUTOINCREMENT,
-                name    TEXT NOT NULL,
+                name    TEXT NOT NULL UNIQUE,
                 passwd  TEXT NOT NULL
             );
         """)

@@ -62,7 +62,6 @@ def get_by_username(user_name):
              WHERE name = ?
         """, (user_name,))
         row = cursor.fetchone()
-        print row
         if row is None:
             return None
         return row[0]

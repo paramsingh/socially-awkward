@@ -15,7 +15,7 @@ def create_post(user_id, post):
     return "Posted Successfully"
 
 
-def get_post(user_id):
+def get_posts(user_id):
     print(type(user_id), user_id)
     with sqlite3.connect(DATABASE_PATH) as connection:
         cursor = connection.cursor()
@@ -24,8 +24,8 @@ def get_post(user_id):
               FROM "post"
              WHERE id = ?;
         """, (user_id, ))
-        row = cursor.fetchone()
-        return {
+        rows = cursor.fetchall()
+        return [{
             'user_id': row[0],
             'post': row[1].decode('utf-8'),
-        }
+        } for row in rows]

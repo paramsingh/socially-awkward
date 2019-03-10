@@ -1,3 +1,9 @@
 *.db
 *.pyc
 *.sqlite3
+config.py
+bin/
+include/
+lib/
+local/
+*.swp
